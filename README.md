@@ -1,12 +1,18 @@
 
 
-# MEAN Web Development
+# MEAN Web Development Tutorial
 
 
 
 ## Usage
 
+### Require
+1. Install Node JS
 
+### How to Install
+
+1. download / clone this source code
+2. npm --install
 
 ## Developing
 
