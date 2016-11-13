@@ -25,12 +25,19 @@ module.exports = function() {
 	app.use(bodyParser.urlencoded({
 		extended : true
 	}));
+	
+	app.use(bodyParser.json());
+	app.use(methodOverride());
 	// Configure the 'session' middleware
 	app.use(session({
 		saveUninitialized: true,
 		resave: true,
 		secret: "this is a secret"
 	}));
+	
+	app.set('views', './app/views');
+	app.set('view engine','ejs');
+	
 	
 	require('../app/routes/index.server.routes.js')(app);
 

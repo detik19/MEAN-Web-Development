@@ -8,11 +8,13 @@
 
 ### Require
 1. Install Node JS
+2. Nodeclipse (Node js eclipse plugin)
 
 ### How to Install
 
 1. download / clone this source code
 2. npm --install
+3. import using nodeclipse (as node js project)
 
 ## Developing
 
