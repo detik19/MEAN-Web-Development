@@ -4,7 +4,8 @@
  */
 'use strict';
 
-var express = require('express'),
+var config = require('./config'),
+	express = require('express'),
 	session = require('express-session'),
 	compress = require('compression'),
 	morgan = require('morgan'),
@@ -32,7 +33,7 @@ module.exports = function() {
 	app.use(session({
 		saveUninitialized: true,
 		resave: true,
-		secret: "this is a secret"
+		secret: config.sessionSecret
 	}));
 	
 	app.set('views', './app/views');

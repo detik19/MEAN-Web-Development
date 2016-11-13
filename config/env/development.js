@@ -3,4 +3,6 @@
  */
 module.exports = {
 		//development config here
+		sessionSecret: 'developmentSessionSecret'
+
 };
