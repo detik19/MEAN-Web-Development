@@ -5,13 +5,26 @@
 'use strict';
 
 var express = require('express'),
-	session = require('express-session');
+	session = require('express-session'),
+	compress = require('compression'),
+	morgan = require('morgan'),
+	bodyParser = require('body-parser'),
+	methodOverride = require('method-override');
 
 
 module.exports = function() {
 
 	//creates a new instance of an Express application,
 	var app = express();
+	
+	if(process.env.NODE_ENV === 'development'){
+		app.use(morgan('dev'));
+	}else if(process.env.NODE_ENV === 'production'){
+		app.use(compress());
+	}
+	app.use(bodyParser.urlencoded({
+		extended : true
+	}));
 	// Configure the 'session' middleware
 	app.use(session({
 		saveUninitialized: true,
