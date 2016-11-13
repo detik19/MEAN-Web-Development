@@ -41,5 +41,13 @@ module.exports = function() {
 	
 	require('../app/routes/index.server.routes.js')(app);
 
+	/*
+	 * The express.static() middleware takes one argument to determine the location of
+	 *	the static folder. Notice how the express.static() middleware is placed below the
+     * call for the routing fle. This order matters because if it were above it, Express would
+     * frst try to look for HTTP request paths in the static fles folder	
+	 * 
+	 */
+	app.use(express.static('./public'));
 	return app;
 };
