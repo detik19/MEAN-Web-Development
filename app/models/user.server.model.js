@@ -16,13 +16,72 @@ var mongoose = require('mongoose'),
 var UserSchema= new Schema({
 	firstName: String,
 	lastName: String,
-	email: String,
-	username: String,
+	email: {
+		type: String,
+		index: true
+	},
+	username: {
+		type: String,
+		trim: true,
+		unique: true
+	},
 	password: String,
 	created:{
 		type: Date,
 		default: Date.now
+	},
+	website:{
+		type: String,
+		set: function(url) {
+			// Use a setter property to validate protocol existance in 'website' field
+			if(!url){
+				return url;
+			}else{
+				if(url.indexOf('http://') !==0 && url.indexOf('https://')!==0){
+					url = 'http://'+url;
+				}
+				return url;
+				
+			}
+		}
+//		get: function(url) {
+//			if(!url){
+//				return url;
+//			}else{
+//				if(url.indexOf('http://') !==0 && url.indexOf('https://')!==0){
+//					url='http://'+url;
+//				}
+//				return url;
+//			}
+//			
+//		}
 	}
+	
+});
+
+//Set the 'fullname'virtual property
+/*
+ * add a virtual attribute named fullName 
+ * to your UserSchema,
+ * 
+ */
+UserSchema.virtual('fullName').get(function() {
+	return this.firstName+' '+this.lastName;
+}).set(function(fullName) {
+	var splitName= fullName.split(' ');
+	this.firstName = splitName[0] || '';
+	this.lastName = splitName[1] || '';
 });
 
 mongoose.model('User', UserSchema);
+/*
+ * This will force Mongoose to include getters when
+ * converting the MongoDB document to a JSON representation and will allow the
+ * output of documents using res.json() to include the getter's behavior.
+ * 
+ */
+UserSchema.set('toJSON', {
+	getters: true,
+	virtuals: true //confgured your schema to include virtual attributes when converting the MongoDB document to a JSON representation
+	
+});
