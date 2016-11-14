@@ -40,6 +40,10 @@ exports.read = function(req, res) {
 	res.json(req.user);
 };
 
+/*
+ *  userById() method is the one responsible for populating the
+ *  req.user object. 
+ */
 exports.userByID = function(req, res, next, id) {
 	User.findOne({
 		_id: id
@@ -53,4 +57,14 @@ exports.userByID = function(req, res, next, id) {
 		
 	});
 	
+};
+
+exports.update = function(req, res, next) {
+	User.findByIdAndUpdate(req.user.id, req.body, function(err, user) {
+		if(err){
+			return next(err);
+		}else{
+			res.json(user);
+		}
+	});
 };

@@ -14,6 +14,18 @@ module.exports= function(app){
 	 * 
 	 */
 	app.route('/users/:userId')
-		.get(users.read);
+		.get(users.read)
+		.put(users.update);
+	
+	/*
+	 * To handle the population of the req.user object, 
+	 * 	you use the app.param() method that defines 
+	 * 	a middleware to be executed before any other middleware 
+	 * 	that uses that parameter
+	 * 
+	 * Here, the users.userById() method will be executed 
+	 * before any other middleware registered with the userId parameter, 
+	 * which in this case is the users.read() middleware.
+	 */
 	app.param('userId', users.userByID);
 };
