@@ -15,7 +15,8 @@ module.exports= function(app){
 	 */
 	app.route('/users/:userId')
 		.get(users.read)
-		.put(users.update);
+		.put(users.update)
+		.delete(users.delete);
 	
 	/*
 	 * To handle the population of the req.user object, 
