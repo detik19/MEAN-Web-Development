@@ -10,7 +10,9 @@ var config = require('./config'),
 	compress = require('compression'),
 	morgan = require('morgan'),
 	bodyParser = require('body-parser'),
-	methodOverride = require('method-override');
+	methodOverride = require('method-override'),
+	flash = require('connect-flash'),
+	passport = require('passport');
 
 
 module.exports = function() {
@@ -27,6 +29,7 @@ module.exports = function() {
 		extended : true
 	}));
 	
+	
 	app.use(bodyParser.json());
 	app.use(methodOverride());
 	// Configure the 'session' middleware
@@ -39,6 +42,13 @@ module.exports = function() {
 	app.set('views', './app/views');
 	app.set('view engine','ejs');
 	
+	app.use(flash());
+
+	//
+	//bootstrapping the Passport module 
+	app.use(passport.initialize());
+	
+	app.use(passport.session());
 	
 	require('../app/routes/index.server.routes.js')(app);
 	require('../app/routes/users.server.routes.js')(app);
